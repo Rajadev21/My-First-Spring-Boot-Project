@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{user/base::layout(~{::section})}">
+<head>
+<meta charset="UTF-8" />
+<title>Home</title>
+</head>
+<body>
+
+	<section>
+
+		<div class="container">
+
+			<div class="card">
+
+				<div class="card-body">
+
+				<h1 class="text-center">Update your Details</h1>
+
+
+
+					<form th:action="@{/user/user-process-update}" th:object="${user}"
+						th:method="post" enctype="multipart/form-data">
+
+						<input type="hidden" name="id" th:value="${user.id}" />
+
+						<!--name field  -->
+						<div class="form-group">
+							<label for="name-field" class="form-label">Your Name </label> <input
+								type="text" name="name" class="form-control" id="name-filed"
+								placeholder="Enter here" required="required"
+								aria-describedby="emailHelp" th:value="${user.name}">
+
+							<!-- Display validation error -->
+							<p th:if="${#fields.hasErrors('name')}" th:errors="*{name}"
+								class="text-danger"></p>
+
+						</div>
+						<!--email field  -->
+						<div class="form-group mt-2">
+							<label for="email-field" class="form-label">Your Email </label> <input
+								type="email" name="email" class="form-control" id="email-filed"
+								placeholder="Enter here" required="required"
+								aria-describedby="emailHelp" th:value="${user.email}">
+							<!-- Display validation error -->
+							<p th:if="${#fields.hasErrors('email')}" th:errors="*{email}"
+								class="text-danger"></p>
+
+						</div>
+						<!--password field  -->
+						<!-- <div class="form-group mt-2">
+							<label for="password-field" class="form-label">Your
+								Password </label> <input type="password" name="password"
+								class="form-control" id="password-filed"
+								placeholder="Enter here" required="required"
+								aria-describedby="emailHelp" th:value="${user.password}">
+
+							Display validation error
+							<p th:if="${#fields.hasErrors('password')}"
+								th:errors="*{password}" class="text-danger"></p>
+
+						</div> -->
+
+						<!--about-field  -->
+						<div class="form-group mt-2">
+							
+							<label for="">About Yourself</label>
+	
+							<textarea rows="7" class="form-control mt-2" name="about"
+								placeholder="Enter about your-self" required="required"
+								th:text="${user.about}"></textarea>
+							<!-- Display validation error -->
+							<p th:if="${#fields.hasErrors('about')}" th:errors="*{about}"
+								class="text-danger"></p>
+
+						</div>
+
+
+						<div class="custom-file mt-3">
+
+
+							<!-- Display existing image name if available -->
+							<div th:if="${user.image}">
+								<div class="container text-center">
+									<img style="width: 200px; height: 200px"
+										class="img-fluid prifile_picture" src=""
+										th:src="@{'/image/'+ ${user.image}}" alt="" />
+								</div>
+							</div>
+							<label for="imageInput" class="form-label">Update Profile
+								Image </label> <input type="file" class="form-control" id="imageInput"
+								name="profileImage" accept="image/*"
+								aria-describedby="imageHelp"> <small id="imageHelp"
+								class="form-text text-muted">Please select an image file
+								(JPG, PNG, etc.).</small>
+						</div>
+
+						<button type="submit" class="btn btn-primary">Save
+							Changes</button>
+					</form>
+
+
+
+
+
+
+				</div>
+
+			</div>
+
+		</div>
+
+	</section>
+
+</body>
+</html>

@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{user/base::layout(~{::section})}">
+<head>
+<meta charset="UTF-8" />
+<title>Home</title>
+</head>
+<body>
+
+	<section>
+
+		<div class="container">
+
+			<div class="card">
+
+				<div class="card-body">
+
+					<div class="container text-center">
+						<img src="" style="height: 200px; width: 200px"
+							class="prifile_picture" th:src="@{'/image/' + ${user.image}}"
+							alt="" />
+
+					</div>
+
+					<h1 class="text-center" th:text="${user.name}"></h1>
+
+
+					<table class="table table-hover text-center">
+						<thead>
+							<tr>
+								<th scope="col">USER ID</th>
+								<th scope="col">SCM<span th:text="${user.id}"></span></th>
+
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<th scope="row">Email</th>
+								<td><span th:text="${user.email}"></span></td>
+
+							</tr>
+							<tr>
+								<th scope="row">Role</th>
+								<td><span th:text="${user.role}"></span></td>
+
+							</tr>
+							<tr>
+								<th scope="row">Status</th>
+								<td><span th:text="${user.status}"></span></td>
+
+							</tr>
+							<tr>
+								<th scope="row">About</th>
+								<td><span th:text="${user.about}"></span></td>
+
+							</tr>
+
+						</tbody>
+
+
+					</table>
+
+					<!--edit option  -->
+
+					<div class="container mt-3">
+
+						<div class="caontainer text-center">
+
+
+							<a th:href="@{'/user/updateuser/'+ ${user.id}}" class="edit-link">
+								<i class="fas fa-edit"></i>
+							</a>
+
+
+
+
+
+						</div>
+
+
+
+					</div>
+
+
+
+				</div>
+
+			</div>
+
+		</div>
+		
+			<script>
+	$(document).ready(() =>
+	{
+	$(".item").removeClass("active");
+	$("#profile").addClass("active");
+
+	});
+	
+	</script>
+
+	</section>
+
+</body>
+</html>

@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{base::layout(~{::section})}">
+<head>
+<meta charset="UTF-8" />
+<title>Home</title>
+</head>
+<body>
+
+	<section>
+
+		<div class="container">
+			<div class="row">
+				<div class="col-md-6 offset-md-3">
+					<div class="my-card mt-4">
+
+						<div th:if="${sessionMessage != null}"
+							th:classappend="${sessionMessage.type}"
+							class="alert alert-primary" role="alert">
+							<p th:text="${sessionMessage.content}"></p>
+						</div>
+
+						<div class="container text-center">
+							<img style="width: 80px" th:src="@{/image/add-friend.png}" alt="" />
+						</div>
+
+						<h1 class="text-center">Register Here</h1>
+
+						<form action="" th:action="@{/register}" method="post"
+							th:object=${user} enctype="multipart/form-data">
+
+							<!--name field  -->
+							<div class="form-group">
+								<label for="name-field" class="form-label">Your Name </label>
+								 <input
+									type="text" name="name" class="form-control" id="name-filed"
+									placeholder="Enter here" required="required"
+									aria-describedby="emailHelp" th:value="${user.name}">
+
+								<!-- Display validation error -->
+								<p th:if="${#fields.hasErrors('name')}" th:errors="*{name}"
+									class="text-danger"></p>
+
+							</div>
+							<!--email field  -->
+							<div class="form-group mt-2">
+								<label for="email-field" class="form-label">Your Email </label>
+								<input type="email" name="email" class="form-control"
+									id="email-filed" placeholder="Enter here" required="required"
+									aria-describedby="emailHelp" th:value="${user.email}">
+								<!-- Display validation error -->
+								<p th:if="${#fields.hasErrors('email')}" th:errors="*{email}"
+									class="text-danger"></p>
+
+							</div>
+							<!--password field  -->
+							<div class="form-group mt-2">
+								<label for="password-field" class="form-label">Your
+									Password </label> <input type="password" name="password"
+									class="form-control" id="password-filed"
+									placeholder="Enter here" required="required"
+									aria-describedby="emailHelp" th:value="${user.password}">
+
+								<!-- Display validation error -->
+								<p th:if="${#fields.hasErrors('password')}"
+									th:errors="*{password}" class="text-danger"></p>
+
+							</div>
+
+							<!--about-field  -->
+							<div class="form-group mt-2">
+
+								<textarea rows="7" class="form-control" name="about"
+									placeholder="Enter about your-self" required="required"
+									th:text="${user.about}"></textarea>
+								<!-- Display validation error -->
+								<p th:if="${#fields.hasErrors('about')}" th:errors="*{about}"
+									class="text-danger"></p>
+
+							</div>
+
+							<!-- terms and conditions -->
+							<div class="form-group form-check mt-2">
+
+								<input type="checkbox" name="agreement" class="form-check-input"
+									id="agreement" /> <label for="agreement">Accept terms
+									and conditions</label>
+
+							</div>
+							
+							<!--adding user image  -->
+							<div class="custom-file mt-3">
+									<label for="imageInput" class="form-label">Set Your
+										Profile Image</label> <input type="file" class="form-control"
+										id="imageInput" name="profileImage" accept="image/*"
+										aria-describedby="imageHelp"> 
+										<small id="imageHelp"
+										class="form-text text-muted">Please select an image
+										file (JPG, PNG, etc.).</small>
+								</div>
+
+							<!--button-field  -->
+
+							<div class="container text-center mt-3">
+								<button type="submit"
+									class="btn bg-primary btn-block text-white">Submit</button>
+								<button type="reset"
+									class="btn btn-warning btn-block text-white">Reset</button>
+
+							</div>
+
+						</form>
+
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</section>
+
+</body>
+</html>

@@ -1,0 +1,235 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap');
+
+
+
+
+body {
+	background: whitesmoke !important;
+
+}
+
+.bg-primary {
+	background: #009688 !important;
+}
+
+.banner {
+	width: 100%;
+	height: 100vh;
+	background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url(../image/Contactbanner.png);
+	background-size: contain;
+	background-repeat: no-repeat;
+	color: white;
+}
+
+.my-card {
+
+	padding: 30px;
+	background: #ffffff;
+}
+
+
+
+/* CSS for the custom login start */
+
+#login .container #login-row #login-column #login-box {
+	margin-top: 120px;
+	max-width: 600px;
+	height: 420px;
+	border: 1px solid #9C9C9C;
+	background-color: whitesmoke;
+}
+
+#login .container #login-row #login-column #login-box #login-form {
+	padding: 20px;
+}
+
+#login .container #login-row #login-column #login-box #login-form #register-link {
+	margin-top: -85px;
+}
+
+/* CSS for the custom login End */
+
+
+/* Sidebar start*/
+
+@media only screen and (max-width:600px) {
+
+	.sidebar {
+		display: none;
+		width: 80% !important;
+		background: white;
+		height: 100vh;
+		position: fixed;
+		padding-top: 20px;
+	}
+
+	.content {
+		margin-left: 0% !important;
+	}
+}
+
+.sidebar {
+
+	width: 18%;
+	background: white;
+	height: 100%;
+	position: fixed;
+	padding-top: 45px;
+	z-index: 9999999999999999;
+}
+
+.sidebar a {
+
+	display: block;
+	width: 100%;
+	padding: 10px 20px;
+	text-decoration: none;
+	color: gray;
+}
+
+.sidebar a:hover {
+
+	background: #e2e2e2;
+}
+
+.sidebar .crossbtn {
+	position: absolute;
+	top: 3px;
+	right: 35px;
+	font-size: 36px;
+	cursor: pointer;
+}
+
+/* Sidebar End*/
+
+/* content start*/
+
+.content {
+
+	margin-left: 20%;
+}
+
+/* content end*/
+
+
+
+
+
+/* working on search box in view contacts*/
+
+.search-container {
+	position: relative;
+	
+}
+
+.search-result{
+	position: absolute;
+	background: white;
+	width: 100%;
+	padding: 10px;
+	border: 1px solid gray;
+	display: none;
+}
+
+
+
+
+/* Styling profil picture */
+
+.prifile_picture {
+	width: 35px;
+	height: 35px;
+	object-fit: cover;
+	border-radius: 50%;
+}
+
+
+
+
+
+/* Style the tooltip */
+/* Style the tooltip for Delete */
+[data-tooltip="delete"]:hover::after {
+	content: "Delete";
+	background-color: #f44336;
+	/* Red background color for Delete */
+	color: #fff;
+	/* White text color */
+	padding: 8px;
+	/* Padding around the text */
+	border-radius: 4px;
+	/* Rounded corners */
+	position: absolute;
+	z-index: 1;
+	top: 100%;
+	/* Adjust the distance from the element */
+	left: 45%;
+	transform: translateX(-50%);
+	font-size: 12px;
+	/* Font size */
+	letter-spacing: 2px; /* Add letter-spacing */
+
+}
+
+/* Style the tooltip for Edit */
+[data-tooltip="edit"]:hover::after {
+	content: "Edit";
+	background-color: blue;
+	/* Blue background color for Edit */
+	color: #fff;
+	/* White text color */
+	padding: 8px;
+	/* Padding around the text */
+	border-radius: 4px;
+	/* Rounded corners */
+	position: absolute;
+	z-index: 1;
+	top: 100%;
+	/* Adjust the distance from the element */
+	left: 55%;
+	transform: translateX(-50%);
+	font-size: 12px;
+	/* Font size */
+	letter-spacing: 2px; /* Add letter-spacing */
+
+	
+}	
+
+.edit-link {
+    display: inline-block;
+    width: 50px;
+    height: 50px;
+    text-align: center;
+    line-height: 50px;
+    background-color: #f0f0f0;
+    border-radius: 50%;
+    text-decoration: none;
+    position: relative;
+    transition: background-color 0.3s;
+}
+
+.edit-link:hover {
+    background-color: #ddd;
+}
+
+.edit-link i {
+    font-size: 24px;
+    color: #333;
+}
+
+.edit-link:hover i {
+    color: #00aa00; /* Change the color to green on hover */
+}
+
+/* active side bar */
+
+.active{
+	background-color: #009688;
+	color: white !important;
+}
+
+
+
+	
+	
+	

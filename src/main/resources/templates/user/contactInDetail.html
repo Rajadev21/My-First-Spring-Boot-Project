@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{user/base::layout(~{::section})}">
+<head>
+<meta charset="UTF-8" />
+<title>Home</title>
+</head>
+<body>
+
+	<section>
+
+		<div class="card" th:if=${contact} style="margin-right: 30px; margin-left: 30px">
+
+			<div class="card-body" >
+
+				<div class="container text-center">
+
+					<img src="" style="height: 200px; width: 200px"
+						class="prifile_picture" th:src="@{'/image/' + ${contact.image}}"
+						alt="" />
+
+					<h3 class="mt-2" th:text="${contact.name}"></h3>
+
+					<table class="table table-hover">
+						<thead>
+							<tr>
+								<th scope="col">USER</th>
+								<th scope="col">SCM<span th:text="${contact.cId}"></span></th>
+
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<th scope="row">Email</th>
+								<td><span th:text="${contact.email}"></span></td>
+
+							</tr>
+							<tr>
+								<th scope="row">Phone</th>
+								<td><span th:text="${contact.phone}"></span></td>
+
+							</tr>
+							<tr>
+								<th scope="row">Work</th>
+								<td><span th:text="${contact.work}"></span></td>
+
+							</tr>
+
+						</tbody>
+
+
+					</table>
+
+					<div class="description">
+
+						<th:block th:text="${contact.description}"></th:block>
+					</div>
+
+					<!-- <div class="container mt-3">
+
+						<a href="" style="margin-right: 10px; color: red;"><i
+							class="fas fa-trash-alt"></i></a> <a href=""><i
+							class="fas fa-edit" style="margin-left: 10px;"></i></a>
+					</div> -->
+					<div class="container mt-3">
+						<a href="" th:href="'javascript:void(0)'" th:onclick="'deleteContact(' + ${contact.cId} + ');'" 
+							style="margin-right: 10px; color: red; display: inline-block; width: 50px; height: 50px; text-align: center; line-height: 50px;">
+							<i class="fas fa-trash-alt" style="font-size: 24px;"
+							data-tooltip="delete"></i>
+						</a> 
+						
+						<a href="" th:href="@{'/user/updateContact/' + ${contact.cId}}"
+							style="display: inline-block; width: 50px; height: 50px; text-align: center; line-height: 50px;">
+							<i class="fas fa-edit"
+							style="font-size: 24px; margin-left: 10px;" data-tooltip="edit"></i>
+						</a>
+					</div>
+
+
+
+
+
+				</div>
+
+			</div>
+
+		</div>
+		
+	    <h1 class="text-center p-3 bg-danger text-white" th:unless="${contact}">You don't have permission to see this contact</h1>
+	
+	</section>
+
+</body>
+</html>

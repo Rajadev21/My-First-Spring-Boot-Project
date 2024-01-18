@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{user/base::layout(~{::section})}">
+<head>
+<meta charset="UTF-8" />
+<title>Home</title>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+</head>
+<body>
+
+	<section>
+
+		<div class="container">
+
+			<div class="card">
+
+				<div class="card-body my-5">
+					<h1>Smart Contact Manager - Your Efficient Contact Management</h1>
+
+					<div class="container text-center">
+						<img src="" style="height: 200px; width: 200px"
+							class="prifile_picture" th:src="@{'/image/contactlogo.png' }"
+							alt="" />
+
+					</div>
+
+					<!-- 				<h1 class="text-center mt-3 text-secondary font-italic">Start adding Your contacts to cloud</h1>
+ -->
+					<div class="contanier text-center mt-3">
+						<p>Manage your contacts seamlessly with our Smart Contact
+							Manager. Whether you're a busy professional, an entrepreneur, or
+							just someone looking to keep their contacts organized, our
+							platform provides the tools you need for efficient contact
+							management.</p>
+
+
+						<a th:href="@{/user/addcontact}"
+							class="mt-2 btn btn-primary text-uppercase">Add New Contact</a>
+					</div>
+
+				</div>
+
+			</div>
+		</div>
+
+		<script>
+	$(document).ready(() =>
+	{
+	$(".item").removeClass("active");
+	$("#home").addClass("active");
+
+	});
+	
+	</script>
+
+	</section>
+
+</body>
+</html>
