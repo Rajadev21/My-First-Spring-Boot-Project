@@ -1,6 +1,7 @@
 package com.smart.controller;
 
 import java.io.File;
+import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -12,6 +13,9 @@ import java.util.NoSuchElementException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.WritableResource;
+import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -84,58 +88,57 @@ public class UserController {
 		return "image_" + timeStamp + "_" + randomString;
 	}
 
-	@PostMapping("/process-contact")
-	public String processContact(@ModelAttribute Contact contact, @RequestParam("profileImage") MultipartFile file,
-			Principal principal, HttpSession session, RedirectAttributes redirectAttributes) {
 
-		try {
-			String name = principal.getName();
-			User user = userRepository.getuserByUserName(name);
+@PostMapping("/process-contact")
+public String processContact(@ModelAttribute Contact contact, @RequestParam("profileImage") MultipartFile file,
+                             Principal principal, HttpSession session, RedirectAttributes redirectAttributes) {
 
-//			uploading file 
+    try {
+        String name = principal.getName();
+        User user = userRepository.getuserByUserName(name);
 
-			if (file.isEmpty()) {
-				System.out.println("Image is not added");
-				contact.setImage("contact.png");
+        // Uploading file
 
-			} else {
-//				upload the file to folder and update the name to contact
-				// Generate a unique filename for the image
-				String originalFileName = file.getOriginalFilename();
-				String fileExtension = originalFileName.substring(originalFileName.lastIndexOf("."));
-				String uniqueFileName = generateUniqueFileName() + fileExtension;
+        if (file.isEmpty()) {
+            System.out.println("Image is not added");
+            contact.setImage("contact.png");
+        } else {
+            // Upload the file to the folder and update the name in the contact
 
-				// Save the file with the unique name
-				contact.setImage(uniqueFileName);
-				File saveFile = new ClassPathResource("static/image").getFile();
-				Path path = Paths.get(saveFile.getAbsolutePath() + File.separator + uniqueFileName);
+            // Generate a unique filename for the image
+            String originalFileName = file.getOriginalFilename();
+            String fileExtension = originalFileName.substring(originalFileName.lastIndexOf("."));
+            String uniqueFileName = generateUniqueFileName() + fileExtension;
 
-				Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
-				System.out.println("Image is added with a unique name: " + uniqueFileName);
+            // Save the file with the unique name using classpath-based resource handling
+            PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
+            Resource resource = resolver.getResource("classpath:static/image/");
+            WritableResource writableResource = (WritableResource) resource.createRelative(uniqueFileName);
 
-			}
+            try (OutputStream outputStream = writableResource.getOutputStream()) {
+                outputStream.write(file.getBytes());
+            }
 
-			contact.setUser(user);
-			user.getContacts().add(contact);
-			userRepository.save(user);
+            contact.setImage(uniqueFileName);
+            System.out.println("Image is added with a unique name: " + uniqueFileName);
+        }
 
-			redirectAttributes.addFlashAttribute("sessionMessage",
-					new Message("Your contact is added successfully", "alert-success"));
-			// session.setAttribute("message", new Message("Your contact is added
-			// successfully","success"));
-			session.removeAttribute("message");
+        contact.setUser(user);
+        user.getContacts().add(contact);
+        userRepository.save(user);
 
-		} catch (Exception e) {
+        redirectAttributes.addFlashAttribute("sessionMessage",
+                new Message("Your contact is added successfully", "alert-success"));
+        session.removeAttribute("message");
 
-			System.out.println("ERROR" + e.getMessage());
-			e.printStackTrace();
-			session.setAttribute("message", new Message("Something Went Wrong", "danger"));
+    } catch (Exception e) {
+        System.out.println("ERROR: " + e.getMessage());
+        e.printStackTrace();
+        session.setAttribute("message", new Message("Something Went Wrong", "danger"));
+    }
 
-		}
-
-		return "redirect:/user/addcontact";
-
-	}
+    return "redirect:/user/addcontact";
+}
 
 	@GetMapping("/viewcontacts/{page}")
 	public String viewContacts(@PathVariable("page") Integer page, Model model, Principal principal) {
