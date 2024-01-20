@@ -1,14 +1,12 @@
 package com.smart.controller;
 
-import java.io.File;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
+import java.io.OutputStream;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.WritableResource;
+import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 //import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 //import org.springframework.security.crypto.password.PasswordEncoder;
@@ -23,7 +21,6 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.smart.config.AuthenticationService;
-import com.smart.config.UserDetailServiceImple;
 import com.smart.dao.UserRepository;
 import com.smart.entity.User;
 import com.smart.helper.Message;
@@ -103,18 +100,21 @@ public class HomeController {
 		            String fileExtension = originalFileName.substring(originalFileName.lastIndexOf("."));
 		            String uniqueFileName = generateUniqueFileName() + fileExtension;
 
-		            // Save the file with the unique name
-		            user.setImage(uniqueFileName);
-		            File saveFile = new ClassPathResource("static/image").getFile();
-		            Path path = Paths.get(saveFile.getAbsolutePath() + File.separator + uniqueFileName);
+		            // Save the file with the unique name using classpath-based resource handling
+		            PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
+		            Resource resource = resolver.getResource("classpath:static/image/");
+		            WritableResource writableResource = (WritableResource) resource.createRelative(uniqueFileName);
 
-		            Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
+		            try (OutputStream outputStream = writableResource.getOutputStream()) {
+		                outputStream.write(file.getBytes());
+		            }
+
+		            user.setImage(uniqueFileName);
 		            System.out.println("Profile image added with a unique name: " + uniqueFileName);
 		        } else {
 		            // Set a default image if no file is provided
 		            user.setImage("default.png");
 		        }
-			
 			
 			
 //          end here
