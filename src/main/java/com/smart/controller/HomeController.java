@@ -102,10 +102,9 @@ public class HomeController {
 
 		            // Save the file with the unique name using classpath-based resource handling
 		            PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
-		            Resource resource = resolver.getResource("classpath:static/image/");
-		            WritableResource writableResource = (WritableResource) resource.createRelative(uniqueFileName);
+		            Resource resource = resolver.getResource("classpath:static/image/" + uniqueFileName);
 
-		            try (OutputStream outputStream = writableResource.getOutputStream()) {
+		            try (OutputStream outputStream = ((WritableResource) resource).getOutputStream()) {
 		                outputStream.write(file.getBytes());
 		            }
 
